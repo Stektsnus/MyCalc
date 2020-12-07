@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+
+<HTML>
+<head>
+<title>MyCalc</title>
+<style>
+    .button {
+        border: black outset 2px;
+        background-color: gray;
+        text-align: center;
+        font-size: 100%;
+        width:20px;
+        height:20px;
+    }
+    .button:hover {
+        background-color: #dfd37f;
+        border-color: #dfd37f;
+    }
+    .button:active {
+        border:black inset 2px;
+    }
+    #variableContainer {
+        border: gray solid 2px;
+        width: 105px;
+    }
+    .variable {
+        background-color: white;
+        border: none;
+        text-align: left;
+        margin: 0;
+        padding: 0;
+    }
+    #input {
+        margin: 0;
+        padding: 0;
+    }
+    #buttonContainer {
+        margin: none;
+        padding: none;
+        border: none;
+    }
+</style>
+</head>
+<body>
+<div id="mainContainer"></div>
+    <h1 >MyCalc</h1>
+    <div id="variableContainer">
+        <table>
+            <tr>
+                <td>t: </td>
+                <td class="variable" id="t">0</td>
+            </tr>
+            <tr>
+                <td>x: </td>
+                <td class="variable" id="x">0</td>
+            </tr>
+            <tr>
+                <td>y: </td>
+                <td class="variable" id="y">0</td>
+            </tr>
+            <tr>
+                <td>z: </td>
+                <td class="variable" id="z">0</td>
+            </tr>
+        </table>
+            
+    </div>
+    <p id="input">_</p>
+    <div id="buttonContainer">
+    <table>
+        <tr>
+            <td class="button" colspan="2" onclick="buttonClick(this)">enter</td>
+            <td class="button" onclick="buttonClick(this)">ce</td>
+            <td class="button" onclick="buttonClick(this)">cs</td>
+        </tr>
+        <tr>
+            <td class="button" onclick="addEntry(this)">7</td>
+            <td class="button" onclick="addEntry(this)">8</td>
+            <td class="button" onclick="addEntry(this)">9</td>
+            <td class="button" onclick="mathOperation(this)">/</td>
+        </tr>
+        <tr>
+            <td class="button" onclick="addEntry(this)">4</td>
+            <td class="button" onclick="addEntry(this)">5</td>
+            <td class="button" onclick="addEntry(this)">6</td>
+            <td class="button" onclick="mathOperation(this)">*</td>
+        </tr>
+        <tr>
+            <td class="button" onclick="addEntry(this)">1</td>
+            <td class="button" onclick="addEntry(this)">2</td>
+            <td class="button" onclick="addEntry(this)">3</td>
+            <td class="button" onclick="mathOperation(this)">-</td>
+        </tr>
+        <tr>
+            <td class="button" onclick="chs(this)">±</td>
+            <td class="button" onclick="addEntry(this)">0</td>
+            <td class="button" onclick="addEntry(this)">.</td>
+            <td class="button" onclick="mathoOperation(this)">+</td>
+        </tr>
+    </table>
+    </div>
+</div>
+<script>
+    var sgn;
+    function addEntry(element) {
+        if (document.getElementById("input").innerHTML == "_") {
+            document.getElementById("input").innerHTML = element.innerHTML;
+        }
+        else {
+            document.getElementById("input").innerHTML += element.innerHTML;
+        }
+    };
+    function buttonClick(element) {
+        if (element.innerHTML == "enter") {
+            if (document.getElementById("input").innerHTML == "_") {
+                return
+            }
+            else {
+                var t = 1 * document.getElementById("t").innerHTML;
+            var x = 1 * document.getElementById("x").innerHTML;
+            var y = 1 * document.getElementById("y").innerHTML;
+            var z = 1 * document.getElementById("z").innerHTML;
+            var currentEntry = 1 * document.getElementById("input").innerHTML;
+            console.log(currentEntry);
+            document.getElementById("t").innerHTML = x;
+            document.getElementById("x").innerHTML = y;
+            document.getElementById("y").innerHTML = z;
+            document.getElementById("z").innerHTML = currentEntry;
+            document.getElementById("input").innerHTML = "_";
+            }
+        }
+        else if (element.innerHTML == "ce") {
+            sgn = 0;
+            document.getElementById("input").innerHTML = "_";
+            return
+        }
+        else if (element.innerHTML == "cs") {
+            document.getElementById("t").innerHTML = 0;
+            document.getElementById("x").innerHTML = 0;
+            document.getElementById("y").innerHTML = 0;
+            document.getElementById("z").innerHTML = 0;
+            return
+        }
+        else {
+            return
+        }
+    };
+    function chs(element) {
+        var currentInput = document.getElementById("input").innerHTML;
+        if (document.getElementById("input").innerHTML.charAt(0) == "-") {
+            sgn = "+";
+            document.getElementById("input").innerHTML = sgn + currentInput.slice(1, currentInput.length);
+            //document.getElementById("input").innerHTML.slice(0, 1) = "+" + document.getElementById("input").innerHTML.slice(0, 1);
+            return
+        }
+        else if (document.getElementById("input").innerHTML.charAt(0) == "+") {
+            sgn = "-";
+            document.getElementById("input").innerHTML = sgn + currentInput.slice(1, currentInput.length);
+            //document.getElementById("input").innerHTML.slice(0, 1) = "-" + document.getElementById("input").innerHTML.slice(0, 1);
+            return
+        }
+        else if (document.getElementById("input").innerHTML.charAt(0) == "_"){
+            sgn = "-";
+            document.getElementById("input").innerHTML = sgn;
+            return
+        }
+        else {
+            sgn = "-";
+            document.getElementById("input").innerHTML = sgn + currentInput;
+            return
+        }
+    }
+    function mathOperation(element) {
+        var t = 1 * document.getElementById("t").innerHTML;
+        var x = 1 * document.getElementById("x").innerHTML;
+        var y = 1 * document.getElementById("y").innerHTML;
+        var z = 1 * document.getElementById("z").innerHTML;
+
+        if (element.innerHTML == "+") {
+            document.getElementById("z").innerHTML = y + z;
+            document.getElementById("y").innerHTML = x;
+            document.getElementById("x").innerHTML = t;
+            document.getElementById("t").innerHTML = 0;
+        }
+        else if (element.innerHTML == "-") {
+            document.getElementById("z").innerHTML = y - z;
+            document.getElementById("y").innerHTML = x;
+            document.getElementById("x").innerHTML = t;
+            document.getElementById("t").innerHTML = 0;
+        }
+        else if (element.innerHTML == "*") {
+            document.getElementById("z").innerHTML = y * z;
+            document.getElementById("y").innerHTML = x;
+            document.getElementById("x").innerHTML = t;
+            document.getElementById("t").innerHTML = 0;
+        }
+        else if (element.innerHTML == "/") {
+            document.getElementById("z").innerHTML = y / z;
+            document.getElementById("y").innerHTML = x;
+            document.getElementById("x").innerHTML = t;
+            document.getElementById("t").innerHTML = 0;
+        }
+    }
+</script>
+</body>
+</HTML>
